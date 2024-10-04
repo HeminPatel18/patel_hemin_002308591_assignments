@@ -163,7 +163,22 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-
+        if (!txtSearch.getText().isBlank()) {
+            String query = txtSearch.getText();
+            Person foundPerson = personDirectory.searchPerson(query);
+            
+            if (foundPerson != null) {
+                ViewPersonJPanel panel = new ViewPersonJPanel(userProcessContainer,personDirectory, foundPerson);
+                userProcessContainer.add ("ViewAccountJPanel", panel);
+                CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+                layout.next(userProcessContainer);
+            } else {
+            JOptionPane.showMessageDialog(null, "Person not found. Please check and try again.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter something to view.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
@@ -180,7 +195,20 @@ public class ManagePersonJPanel extends javax.swing.JPanel {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-
+        int selectedRow = tblPersons.getSelectedRow();
+        
+        if (selectedRow >= 0) {
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the selected person?", "warning", dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                Person selectedPerson = (Person) tblPersons.getValueAt(selectedRow, 0);    
+                personDirectory.deletePerson(selectedPerson);
+                populateData();
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog (null, "Please select a person from the list.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
 
