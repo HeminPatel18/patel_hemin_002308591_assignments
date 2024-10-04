@@ -460,7 +460,46 @@ public class CreatePersonJPanel extends javax.swing.JPanel {
 	String workZipCodeStr = txtZipW.getText();
 	String workPhoneStr = txtPhoneW.getText();
 
+	// Validate mandatory fields
+	if (firstName.isBlank() || lastName.isBlank() || SSNStr.isBlank() || ageStr.isBlank() || annualIncStr.isBlank() ||
+		homeStreet.isBlank() || homeCity.isBlank() || homeState.isBlank() || homeZipCodeStr.isBlank() ||
+		workStreet.isBlank() || workCity.isBlank() || workState.isBlank() || workZipCodeStr.isBlank()) {
+		JOptionPane.showMessageDialog(this, "All fields are mandatory.", "Error", JOptionPane.ERROR_MESSAGE);
+		return;
+	}
 
+	// Validate age SSN and annual income
+	try {
+		byte age = Byte.parseByte(ageStr);
+                int SSN = Integer.parseInt(SSNStr);
+                Double annualInc = Double.parseDouble(annualIncStr);
+                
+             
+	} catch (Exception e) {
+		JOptionPane.showMessageDialog(null, "Please check your age, SSN and/or annual Income", "Warning", JOptionPane.WARNING_MESSAGE);
+		return;
+	}
+        
+        // Validate home and work phone no
+        
+        try {
+		long workPhone = Long.parseLong(workPhoneStr);
+                long homePhone = Long.parseLong(homePhoneStr);
+            
+	} catch (Exception e) {
+		JOptionPane.showMessageDialog(null, "Please check your work/home phone no", "Warning", JOptionPane.WARNING_MESSAGE);
+		return;
+	}
+
+        // Validate home and work Zip code
+        try {
+		int workPhone = Integer.parseInt(homeZipCodeStr);
+                int homePhone = Integer.parseInt(homeZipCodeStr);
+            
+	} catch (Exception e) {
+		JOptionPane.showMessageDialog(null, "Please check your work/home Zip code", "Warning", JOptionPane.WARNING_MESSAGE);
+		return;
+	}
         
         
 	// Create new Person object
