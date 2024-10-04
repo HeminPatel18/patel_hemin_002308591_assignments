@@ -28,7 +28,7 @@ public class MainJFrame extends javax.swing.JFrame {
         
         this.personDirectory = new PersonDirectory();
         this.addressDirectory = new Address();
-        
+        generateDemoData();
     }
 
     /**
@@ -144,7 +144,60 @@ public class MainJFrame extends javax.swing.JFrame {
         });
     }
     
+    private void generateDemoData() {
+        
+      
+        Person person1 = personDirectory.addPerson();
+        person1.setFirstName("Mike");
+        person1.setLastName("Ross");
+        person1.setSSN(123456789);
+        person1.setAge((byte) 23);
+        person1.setAnnualIncome(1212222);
+        person1.setHomeAddress("123 Main St", "Boston", "MA", "02118", 6175551234L);
+        person1.setWorkAddress("456 Work St", "Cambridge", "MA", "02139", 6175555678L);
 
+        Person person2 = personDirectory.addPerson();
+        person2.setFirstName("John");
+        person2.setLastName("Smith");
+        person2.setSSN(987654321); 
+        person2.setAge((byte) 30); 
+        person2.setAnnualIncome(12222);
+        person2.setHomeAddress("789 Oak St", "Somerville", "MA", "02145", 6175559876L);
+        person2.setWorkAddress("321 Elm St", "Boston", "MA", "02118", 6175556543L);
+
+
+        Person person3 = personDirectory.addPerson();
+        person3.setFirstName("Sara");
+        person3.setLastName("Williams");
+        person3.setSSN(112233445);
+        person3.setAge((byte) 27);
+        person3.setAnnualIncome(43222);
+        person3.setHomeAddress("654 Pine St", "Medford", "MA", "02155", 6175557654L);
+        person3.setWorkAddress("321 Work St", "Cambridge", "MA", "02139", 6175554321L);
+
+
+        Person person4 = personDirectory.addPerson();
+        person4.setFirstName("Jane");
+        person4.setLastName("Brown");
+        person4.setSSN(223344556);
+        person4.setAge((byte) 35);
+        person4.setAnnualIncome(1234562);
+        person4.setHomeAddress("456 Maple St", "Quincy", "MA", "02170", 6175553456L);
+        person4.setWorkAddress("987 Work St", "Somerville", "MA", "02145", 6175556789L);
+
+   
+        Person person5 = personDirectory.addPerson();
+        person5.setFirstName("Alex");
+        person5.setLastName("Johnson");
+        person5.setSSN(334455667);
+        person5.setAge((byte) 40);
+        person5.setAnnualIncome(12692);
+        person5.setHomeAddress("987 Cedar St", "Cambridge", "MA", "02139", 6175552345L);
+        person5.setWorkAddress("654 Elm St", "Boston", "MA", "02118", 6175559876L);
+
+        
+      
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPersonMng;
