@@ -1,59 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package info5100.university.example.Persona.Faculty;
 
-import info5100.university.example.Persona.*;
+import info5100.university.example.Persona.Person;
 import info5100.university.example.Department.Department;
+import info5100.university.example.CourseSchedule.CourseOffer;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-/**
- *
- * @author kal bugrara
- */
+
 public class FacultyDirectory {
 
-    Department department;
-    ArrayList<FacultyProfile> teacherlist;
+    private Department department; // The department the faculty directory belongs to
+    private List<FacultyProfile> teacherList; // List of faculty profiles
+    private List<CourseOffer> courseOffers; // List of course offers managed by the faculty
+
 
     public FacultyDirectory(Department d) {
-
-        department = d;
-        teacherlist = new ArrayList();
-
+        if (d == null) {
+            throw new IllegalArgumentException("Department cannot be null");
+        }
+        this.department = d;
+        this.teacherList = new ArrayList<>();
+        this.courseOffers = new ArrayList<>(); // Initialize the course offers list
     }
 
-    public FacultyProfile newFacultyProfile(Person p) {
 
-        FacultyProfile sp = new FacultyProfile(p);
-        teacherlist.add(sp);
-        return sp;
-    }
-    
-    public FacultyProfile getTopProfessor(){
-        
-        double bestratingsofar = 0.0;
-        FacultyProfile BestProfSofar = null;
-        for(FacultyProfile fp: teacherlist)
-           if(fp.getProfAverageOverallRating()>bestratingsofar){
-           bestratingsofar = fp.getProfAverageOverallRating();
-           BestProfSofar = fp;
-           }
-        return BestProfSofar;
-        
+    public FacultyProfile newFacultyProfile(Person person) {
+        FacultyProfile facultyProfile = new FacultyProfile(person);
+        teacherList.add(facultyProfile);
+        return facultyProfile;
     }
 
-    public FacultyProfile findTeachingFaculty(String id) {
 
-        for (FacultyProfile sp : teacherlist) {
+    public void addCourseOffer(CourseOffer courseOffer) {
+        courseOffers.add(courseOffer);
+    }
 
-            if (sp.isMatch(id)) {
-                return sp;
+
+    public Optional<CourseOffer> getCourseOffer(String courseNumber) {
+        return courseOffers.stream()
+                .filter(courseOffer -> courseOffer.getCourseNumber().equals(courseNumber))
+                .findFirst();
+    }
+
+
+    public FacultyProfile getTopProfessor() {
+        double bestRatingSoFar = 0.0;
+        FacultyProfile bestProfSoFar = null;
+
+        for (FacultyProfile facultyProfile : teacherList) {
+            if (facultyProfile.getProfAverageOverallRating() > bestRatingSoFar) {
+                bestRatingSoFar = facultyProfile.getProfAverageOverallRating();
+                bestProfSoFar = facultyProfile;
             }
         }
-            return null; //not found after going through the whole list
-         }
-    
+        return bestProfSoFar;
+    }
+
+
+    public Optional<FacultyProfile> findTeachingFaculty(String id) {
+        return teacherList.stream()
+                .filter(facultyProfile -> facultyProfile.isMatch(id))
+                .findFirst();
+    }
+
+    public List<FacultyProfile> getTeacherList() {
+        return new ArrayList<>(teacherList); // Return a copy for encapsulation
+    }
+
+    // Getter for the department
+    public Department getDepartment() {
+        return department;
+    }
 }
