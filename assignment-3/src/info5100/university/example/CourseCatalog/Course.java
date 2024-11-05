@@ -48,6 +48,10 @@ public class Course {
 
     }
 
+    public String getNumber() {
+        return number;
+    }
+
     public boolean isCoreSubject() {
         return isCoreSubject;
     }

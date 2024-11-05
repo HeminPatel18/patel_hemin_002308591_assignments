@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public class FacultyDirectory {
 
-    private Department department; // The department the faculty directory belongs to
-    private List<FacultyProfile> teacherList; // List of faculty profiles
-    private List<CourseOffer> courseOffers; // List of course offers managed by the faculty
+    private Department department;
+    private List<FacultyProfile> teacherList;
+    private List<CourseOffer> courseOffers;
 
 
     public FacultyDirectory(Department d) {

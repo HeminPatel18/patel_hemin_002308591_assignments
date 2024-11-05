@@ -7,6 +7,7 @@ package info5100.university.example.CourseCatalog;
 
 import info5100.university.example.Department.Department;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -30,6 +31,12 @@ public class CourseCatalog {
         Course c = new Course(n, nm, cr,isCoreSubject);
         courselist.add(c);
         return c;
+    }
+
+    public List<Course> getCoreCourses() {
+        return courselist.stream()
+                .filter(Course::isCoreSubject)
+                .toList();
     }
 
     public Department getDepartment() {
