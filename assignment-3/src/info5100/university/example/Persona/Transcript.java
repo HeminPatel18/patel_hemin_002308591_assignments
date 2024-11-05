@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package info5100.university.example.Persona;
 
 import info5100.university.example.CourseSchedule.CourseLoad;
@@ -11,84 +6,85 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- *
- * @author kal bugrara
+ * Manages the transcript for a student, including course loads and seat assignments.
  */
 public class Transcript {
 
-    StudentProfile student;
-    HashMap<String, CourseLoad> courseloadlist;
+    private StudentProfile student;
+    private StudentAccount studentAccount; // Reference to the associated student account
+    private HashMap<String, CourseLoad> courseLoadList; // Changed the variable name to use camelCase
+    private CourseLoad currentCourseLoad;
 
-    CourseLoad currentcourseload;
-
-    public Transcript(StudentProfile sp) {
-        student = sp;
-        courseloadlist = new HashMap();
-
+    public Transcript(StudentProfile studentProfile, StudentAccount studentAccount) {
+        this.student = studentProfile;
+        this.studentAccount = studentAccount; // Initialize the student account
+        this.courseLoadList = new HashMap<>();
     }
 
-    public int getStudentSatisfactionIndex() {
-        //for each courseload 
-        //get seatassigmnets; 
-        //for each seatassignment add 1 if like =true;
-        return 0;
+    /**
+     * Creates a new course load for a semester and adds it to the course load list.
+     * @param semester The semester for which to create a new course load.
+     * @return The newly created CourseLoad.
+     */
+    public CourseLoad newCourseLoad(String semester) {
+        currentCourseLoad = new CourseLoad(semester, studentAccount); // Pass the student account
+        courseLoadList.put(semester, currentCourseLoad);
+        return currentCourseLoad;
     }
 
-    public CourseLoad newCourseLoad(String sem) {
-
-        currentcourseload = new CourseLoad(sem);
-        courseloadlist.put(sem, currentcourseload);
-        return currentcourseload;
-    }
-
+    /**
+     * Retrieves the current course load.
+     * @return The current CourseLoad.
+     */
     public CourseLoad getCurrentCourseLoad() {
-
-        return currentcourseload;
-
+        return currentCourseLoad;
     }
 
+    /**
+     * Retrieves a course load by its semester.
+     * @param semester The semester for which to retrieve the course load.
+     * @return The CourseLoad for the specified semester.
+     */
     public CourseLoad getCourseLoadBySemester(String semester) {
-
-        return courseloadlist.get(semester);
-
+        return courseLoadList.get(semester);
     }
 
+    /**
+     * Calculates the total score of the student across all semesters.
+     * @return The total score as a float.
+     */
     public float getStudentTotalScore() {
-
         float sum = 0;
-
-        for (CourseLoad cl : courseloadlist.values()) {
-            sum = sum + cl.getSemesterScore();
-
+        for (CourseLoad cl : courseLoadList.values()) {
+            sum += cl.getSemesterScore();
         }
         return sum;
     }
-    //sat index means student rated their courses with likes;
-    public int getStudentSatifactionIndex() {
-        ArrayList<SeatAssignment> courseregistrations = getCourseList();
-        int sum = 0;
-        for (SeatAssignment sa : courseregistrations) {
 
-            if (sa.getLike()) {
-                sum = sum + 1;
+    /**
+     * Calculates the satisfaction index based on liked courses.
+     * @return The number of liked courses.
+     */
+    public int getStudentSatisfactionIndex() {
+        ArrayList<SeatAssignment> courseRegistrations = getCourseList();
+        int sum = 0;
+        for (SeatAssignment sa : courseRegistrations) {
+            if (sa.getLike()) { // Ensure getLike() is implemented in SeatAssignment
+                sum++;
             }
         }
         return sum;
     }
-    //generate a list of all courses taken so far (seetassignments) 
-    //from multiple semesters (course loads)
-    //from seat assignments we will be able to access the course offers
 
+    /**
+     * Generates a list of all seat assignments from multiple semesters.
+     * @return An ArrayList of SeatAssignments.
+     */
     public ArrayList<SeatAssignment> getCourseList() {
-        ArrayList temp2;
-        temp2 = new ArrayList();
-
-        for (CourseLoad cl : courseloadlist.values()) { //extract cl list as objects --ignore label
-            temp2.addAll(cl.getSeatAssignments()); //merge one array list to another
+        ArrayList<SeatAssignment> tempList = new ArrayList<>();
+        for (CourseLoad cl : courseLoadList.values()) {
+            tempList.addAll(cl.getSeatAssignments()); // Assuming getSeatAssignments() returns a list of SeatAssignments
         }
-
-        return temp2;
-
+        return tempList;
     }
-
 }
