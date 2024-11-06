@@ -38,7 +38,7 @@ public class Department {
     private final Degree degree;
     private final HashMap<String, CourseSchedule> masterCourseCatalog;
 
-    public Department(String n) {
+    public Department(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Department name cannot be null or empty.");
         }
@@ -96,7 +96,7 @@ public class Department {
 
     public Course newCourse(String n, String nm, int cr, boolean isCoreSubject) {
 
-        Course c = courseCatalog.newCourse(n, nm, cr, isCoreSubject);
+        Course c = courseCatalog.addCourse(n, nm, cr, isCoreSubject);
         return c;
     }
 
@@ -112,19 +112,19 @@ public class Department {
         return facultyDirectory;
     }
 
-    public void RegisterForAClass(String studentid, String cn, String semester) {
-
-        StudentProfile sp = studentDirectory.findStudent(studentid);
-
-        CourseLoad cl = sp.getCurrentCourseLoad();
-
-        CourseSchedule cs = masterCourseCatalog.get(semester);
-
-        CourseOffer co = cs.getCourseOfferByNumber(cn);
-
-        co.assignEmptySeat(cl);
-
-    }
+//    public void RegisterForAClass(String studentid, String cn, String semester) {
+//
+//        StudentProfile sp = studentDirectory.findStudent(studentid);
+//
+//        CourseLoad cl = sp.getCurrentCourseLoad();
+//
+//        CourseSchedule cs = masterCourseCatalog.get(semester);
+//
+//        CourseOffer co = cs.getCourseOfferByNumber(cn);
+//
+//        co.assignEmptySeat(cl);
+//
+////    }
 
     public boolean registerForClass(String studentId, String courseNumber, String semester) {
         StudentProfile studentProfile = studentDirectory.findStudent(studentId);
@@ -188,7 +188,6 @@ public class Department {
         return String.format("Course Name: %s, Course Number: %s, Credits: %d",
                 course.getName(), course.getNumber(), course.getCredits());
     }
-}
 }
 
 

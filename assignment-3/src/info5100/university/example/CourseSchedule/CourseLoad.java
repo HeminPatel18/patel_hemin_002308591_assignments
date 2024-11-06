@@ -45,10 +45,6 @@ public class CourseLoad {
         return studentAccount;
     }
 
-    public List<SeatAssignment> getSeatAssignments() {
-        return Collections.unmodifiableList(seatassignments);
-    }
-
     public SeatAssignment newSeatAssignment(CourseOffer co){
         
         Seat seat = co.getEmptySeat(); // seat linked to courseoffer
@@ -64,6 +60,32 @@ public class CourseLoad {
         sa.assignSeatToStudent(this);
         seatassignments.add(sa);
     }
+
+    public SeatAssignment registerStudentInClass(CourseOffer courseOffer) {
+        if (courseOffer == null) {
+            System.out.println("CourseOffer cannot be null.");
+            return null;
+        }
+
+        // Check if the student is already registered for this course
+        for (SeatAssignment sa : seatassignments) {
+            if (sa.getCourseOffer().equals(courseOffer)) {
+                System.out.println("Student already registered for " + courseOffer.getCourse().getName());
+                return sa;
+            }
+        }
+
+        Seat seat = courseOffer.getEmptySeat();
+        if (seat == null) {
+            System.out.println("No available seats in " + courseOffer.getCourseNumber());
+            return null;
+        }
+
+        SeatAssignment seatAssignment = seat.newSeatAssignment(this);
+        seatassignments.add(seatAssignment);
+        courseOffer.enrollStudent(studentAccount);
+        return seatAssignment;
+    }
     
     public float getSemesterScore(){ //total score for a full semeter
         float sum = 0;
@@ -72,8 +94,8 @@ public class CourseLoad {
         }
         return sum;
     }
-        public ArrayList<SeatAssignment> getSeatAssignments(){
-            return seatassignments;
-        }
+    public List<SeatAssignment> getSeatAssignments(){
+        return seatassignments;
+    }
             
 }

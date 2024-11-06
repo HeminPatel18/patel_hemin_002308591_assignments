@@ -75,15 +75,20 @@ public class CourseOffer {
     }
 
 
-    public SeatAssignment assignEmptySeat(CourseLoad cl) {
-
-        Seat seat = getEmptySeat();
-        if (seat == null) {
-            return null;
+    public boolean assignEmptySeat(StudentAccount studentAccount) {
+        if (getAvailableSeats() > 0) {
+            enrolledStudents.add(studentAccount);
+            totalRevenue += getCourse().getCoursePrice();
+            return true;
         }
-        SeatAssignment sa = seat.newSeatAssignment(cl); //seat is already linked to course offer
-        cl.registerStudent(sa); //coures offer seat is now linked to student
-        return sa;
+        return false;
+    }
+
+    public void withdrawStudent(StudentAccount student) {
+        if (enrolledStudents.remove(student)) {
+            availableSeats++;
+            totalRevenue -= course.getCoursePrice();
+        }
     }
 
     public int getTotalCourseRevenues() {
@@ -97,6 +102,10 @@ public class CourseOffer {
 
         }
         return sum;
+    }
+
+    public String getSemester() {
+        return semester;
     }
     public Course getSubjectCourse(){
         return course;
@@ -121,6 +130,31 @@ public class CourseOffer {
         return getCourse().getSeatsAvailable() - enrolledStudents.size();
     }
 
+    public void assignAsTeacher(FacultyProfile facultyProfile) {
+        this.facultyAssignment = new FacultyAssignment(facultyProfile, this);
+    }
+
+    public boolean enrollStudent(StudentAccount student) {
+        if (enrolledStudents.contains(student)) {
+            System.out.println("Student already enrolled in this course.");
+            return false;
+        }
+        if (getAvailableSeats() > 0) {
+            enrolledStudents.add(student);
+            totalRevenue += getCourse().getCoursePrice();
+            return true;
+        }
+        return false;
+    }
+
+    public List<StudentAccount> getRegisteredStudents() {
+        return new ArrayList<>(enrolledStudents);
+    }
+
+    public FacultyAssignment getFacultyAssignment() {
+        return facultyAssignment;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -128,6 +162,7 @@ public class CourseOffer {
         CourseOffer that = (CourseOffer) obj;
         return course.equals(that.course) && semester.equals(that.semester);
     }
+
 
     @Override
     public int hashCode() {

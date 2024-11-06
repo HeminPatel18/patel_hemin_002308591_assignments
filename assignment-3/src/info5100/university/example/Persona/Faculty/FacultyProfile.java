@@ -16,8 +16,12 @@ import java.util.ArrayList;
 public class FacultyProfile {
 
     Person person;
-    ArrayList <FacultyAssignment> facultyassignments; 
-    
+    ArrayList <FacultyAssignment> facultyassignments;
+
+    public Person getPerson() {
+        return person;
+    }
+
     public FacultyProfile(Person p) {
 
         person = p;

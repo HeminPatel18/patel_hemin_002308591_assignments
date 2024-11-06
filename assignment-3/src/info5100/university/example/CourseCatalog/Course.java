@@ -31,10 +31,10 @@ public class Course {
 
     public Course(String n, String numb, int ch, boolean isCoreSubject) {
 
-        if (number == null || number.trim().isEmpty()) {
+        if (numb == null || numb.trim().isEmpty()) {
             throw new IllegalArgumentException("Course number cannot be null or empty.");
         }
-        if (credits <= 0) {
+        if (ch <= 0) {
             throw new IllegalArgumentException("Credits must be a positive number.");
         }
 
