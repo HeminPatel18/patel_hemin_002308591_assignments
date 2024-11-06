@@ -5,20 +5,50 @@
  */
 package info5100.university.example.CourseSchedule;
 
+import info5100.university.example.Persona.StudentAccount;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
  * @author kal bugrara
  */
 public class CourseLoad {
-    String semester;
-    ArrayList<SeatAssignment> seatassignments;
+    private final String semester;
+    private final StudentAccount studentAccount;
+    private List<SeatAssignment> seatassignments;
+    private final HashMap<String, CourseOffer> courseOffers;
     
-    public CourseLoad(String s){
+    public CourseLoad(String s, StudentAccount sa){
         seatassignments = new ArrayList();
         semester = s;
+        studentAccount = sa;
+        this.courseOffers = new HashMap<>();
     }
+
+    public void addCourseOffer(CourseOffer courseOffer) {
+        courseOffers.put(courseOffer.getCourseNumber(), courseOffer);
+    }
+
+    public CourseOffer getCourseOffer(String courseNumber) {
+        return courseOffers.get(courseNumber);
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public StudentAccount getStudentAccount() {
+        return studentAccount;
+    }
+
+    public List<SeatAssignment> getSeatAssignments() {
+        return Collections.unmodifiableList(seatassignments);
+    }
+
     public SeatAssignment newSeatAssignment(CourseOffer co){
         
         Seat seat = co.getEmptySeat(); // seat linked to courseoffer

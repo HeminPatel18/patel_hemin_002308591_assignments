@@ -38,4 +38,23 @@ public class Seat {
     public int getCourseCredits(){
         return courseoffer.getCreditHours();
     }
+
+    public void setSeatAssignment(SeatAssignment seatAssignment) {
+        this.seatassignment = seatAssignment;
+    }
+
+
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied; // Update occupied status
+    }
+
+    public int getNumber() {
+        return this.number;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Seat Number: " + number + (occupied ? " (Occupied)" : " (Available)");
+    }
 }

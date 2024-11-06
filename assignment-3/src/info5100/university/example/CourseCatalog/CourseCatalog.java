@@ -8,6 +8,7 @@ package info5100.university.example.CourseCatalog;
 import info5100.university.example.Department.Department;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -62,6 +63,19 @@ public class CourseCatalog {
             if(c.getCOurseNumber().equals(n)) return c;
         }
         return null;
+    }
+
+    public Course addCourse(String number, String name, int credits, boolean isCore) {
+        Course course = new Course(number, name, credits, isCore);
+        courselist.add(course);
+        updateLastUpdated();
+        return course;
+    }
+
+    public Optional<Course> findCourseByNumber(String number) {
+        return courselist.stream()
+                .filter(c -> c.getNumber().equals(number))
+                .findFirst();
     }
 
 }
