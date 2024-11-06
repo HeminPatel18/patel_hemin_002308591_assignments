@@ -1,31 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package info5100.university.example.CourseSchedule;
 
 import info5100.university.example.CourseCatalog.Course;
 import info5100.university.example.CourseCatalog.CourseCatalog;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-import java.util.*;
-
-/**
- *
- * @author kal bugrara
- */
 public class CourseSchedule {
-
-    private CourseCatalog coursecatalog;
+    private CourseCatalog courseCatalog;
     private Map<String, CourseOffer> courseOffers;
     private String semester;
 
-    public CourseSchedule(String s, CourseCatalog cc) {
-        this.semester = s;
-        this.coursecatalog = cc;
+    public CourseSchedule(String semester, CourseCatalog courseCatalog) {
+        this.semester = semester;
+        this.courseCatalog = courseCatalog;
         this.courseOffers = new HashMap<>();
-
-
     }
     public CourseOffer createCourseOffer(String courseNumber) {
         if (courseOffers.containsKey(courseNumber)) {
@@ -33,7 +24,7 @@ public class CourseSchedule {
             return courseOffers.get(courseNumber);
         }
 
-        Optional<Course> optionalCourse = coursecatalog.findCourseByNumber(courseNumber);
+        Optional<Course> optionalCourse = courseCatalog.findCourseByNumber(courseNumber);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             CourseOffer courseOffer = new CourseOffer(course, semester);
@@ -53,7 +44,7 @@ public class CourseSchedule {
 
     public int calculateTotalRevenues() {
         return courseOffers.values().stream()
-                .mapToInt(CourseOffer::getTotalRevenues)
+                .mapToInt(CourseOffer::getTotalRevenue)
                 .sum();
     }
 

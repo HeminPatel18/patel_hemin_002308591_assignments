@@ -10,11 +10,11 @@ import java.util.Optional;
 public class CourseCatalog {
     private Department department;
     private String lastUpdated;
-    private List<Course> courseList;
+    private List<Course> courselist;
 
     public CourseCatalog(Department department) {
         this.department = department;
-        this.courseList = new ArrayList<>();
+        this.courselist = new ArrayList<>();
         updateLastUpdated();
     }
 
@@ -34,19 +34,19 @@ public class CourseCatalog {
         this.lastUpdated = java.time.LocalDateTime.now().toString();
     }
 
-    public List<Course> getCourseList() {
-        return new ArrayList<>(courseList); // Encapsulation
+    public List<Course> getCourselist() {
+        return new ArrayList<>(courselist); // Encapsulation
     }
 
     public Course addCourse(String number, String name, int credits, boolean isCore) {
         Course course = new Course(number, name, credits, isCore);
-        courseList.add(course);
+        courselist.add(course);
         updateLastUpdated();
         return course;
     }
 
     public Optional<Course> findCourseByNumber(String number) {
-        return courseList.stream()
+        return courselist.stream()
                 .filter(c -> c.getNumber().equals(number))
                 .findFirst();
     }
@@ -79,14 +79,14 @@ public class CourseCatalog {
     }
 
     public List<Course> getCoreCourses() {
-        return courseList.stream()
-                .filter(Course::isCoreSubject)
+        return courselist.stream()
+                .filter(Course::isCoreCourse)
                 .toList();
     }
 
     public List<Course> getElectiveCourses() {
-        return courseList.stream()
-                .filter(course -> !course.isCoreSubject())
+        return courselist.stream()
+                .filter(course -> !course.isCoreCourse())
                 .toList();
     }
 }

@@ -70,15 +70,14 @@ public class Info5001UniversityExample {
                     Integer.parseInt(info[2]),  // credits
                     Boolean.parseBoolean(info[3])  // required
             );
+            int price = course.getCredits() * 1864;
 
-            // Calculate price based on credits (assuming $1500 per credit)
-            int price = course.getCredits() * 1;
-
-            System.out.printf("Course Name: %s, Course Number: %s, Credits: %d, Total Price: $%d, Seats Available: 120, Total Revenue: $0%n",
+            System.out.printf("Course Name: %s, Course Number: %s, Credits: %d, Total Price: $%d, Seats Available: 120, Total Revenue: $%d %n",
                     course.getName(),
                     course.getNumber(),
                     course.getCredits(),
-                    price);
+                    price,
+                    course.getTotalRevenue());
         }
     }
 
